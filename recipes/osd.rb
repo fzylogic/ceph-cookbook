@@ -57,6 +57,8 @@ cluster = 'ceph'
 execute 'format bootstrap-osd as keyring' do # ~FC009
   command lazy { "ceph-authtool '/var/lib/ceph/bootstrap-osd/#{cluster}.keyring' --create-keyring --name=client.bootstrap-osd --add-key='#{osd_secret}'" }
   creates "/var/lib/ceph/bootstrap-osd/#{cluster}.keyring"
+  user 'ceph'
+  group 'ceph'
   only_if { osd_secret }
   sensitive true if Chef::Resource::Execute.method_defined? :sensitive
 end
@@ -113,12 +115,16 @@ else
 
       execute "ceph-disk prepare on #{osd_device['device']}" do
         command "ceph-disk prepare #{dmcrypt} #{osd_device['device']} #{osd_device['journal']}"
+        user 'ceph'
+        group 'ceph'
         action :run
         notifies :create, "ruby_block[save osd_device status #{index}]", :immediately
       end
 
       execute "ceph-disk activate #{osd_device['device']}" do
         only_if { osd_device['type'] == 'directory' }
+        user 'ceph'
+        group 'ceph'
       end
 
       # we add this status to the node env
