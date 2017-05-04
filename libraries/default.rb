@@ -41,7 +41,9 @@ def osd_secret
   elsif node['ceph']['bootstrap_osd_key']
     return node['ceph']['bootstrap_osd_key']
   else
-    return mon_nodes[0]['ceph']['bootstrap_osd_key']
+    mn = mon_nodes
+    return nil unless mn and mn[0]
+    return mn[0]['ceph']['bootstrap_osd_key']
   end
 end
 
