@@ -32,7 +32,7 @@ end
 
 ceph_client 'mgr' do
   caps('osd' => 'allow *', 'mon' => 'allow profile mgr', 'mds' => 'allow *')
-  keyname "mds.#{node['hostname']}"
+  keyname "mgr.#{node['hostname']}"
   filename "/var/lib/ceph/mgr/#{cluster}-#{node['hostname']}/keyring"
 end
 
