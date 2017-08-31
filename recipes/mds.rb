@@ -56,14 +56,16 @@ file "/var/lib/ceph/mds/#{cluster}-#{node['hostname']}/#{filename}" do
   mode 00644
 end
 
-service 'ceph_mds' do
-  case service_type
-  when 'upstart'
+if service_type == 'upstart'
+  service 'ceph_mds' do
     service_name 'ceph-mds-all-starter'
     provider Chef::Provider::Service::Upstart
-  else
-    service_name 'ceph'
   end
   action [:enable, :start]
   supports :restart => true
+elsif service_type == 'systemd'
+  unit = "ceph-mon@#{node['hostname']}.service"
+  systemd_unit unit do
+    action :enable
+  end
 end

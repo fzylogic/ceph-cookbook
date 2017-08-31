@@ -133,16 +133,18 @@ else
         action :nothing
       end
     end
-    service 'ceph_osd' do
-      case service_type
-      when 'upstart'
+    if service_type == 'upstart'
+      service 'ceph_osd' do
         service_name 'ceph-osd-all-starter'
         provider Chef::Provider::Service::Upstart
-      else
-        service_name 'ceph'
+        action [:enable]
+        supports :restart => true
       end
-      action [:enable]
-      supports :restart => true
+    elsif service_type == 'systemd'
+      unit = "ceph-mon@#{node['hostname']}.service"
+      systemd_unit unit do
+        action :enable
+      end
     end
   else
     Log.info('node["ceph"]["osd_devices"] empty')
