@@ -22,6 +22,14 @@ include_recipe 'ceph::mgr_install'
 
 cluster = 'ceph'
 
+directory "/var/lib/ceph/mgr/#{cluster}-#{node['hostname']}" do
+  owner 'root'
+  group 'root'
+  mode 00755
+  recursive true
+  action :create
+end
+
 ceph_client 'mgr' do
   caps('osd' => 'allow *', 'mon' => 'allow profile mgr', 'mds' => 'allow *')
   keyname "mds.#{node['hostname']}"
