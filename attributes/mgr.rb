@@ -6,7 +6,7 @@ case node['platform_family']
 when 'debian'
   packages = ['ceph-mgr']
   packages += debug_packages(packages) if node['ceph']['install_debug']
-  default['ceph']['mds']['packages'] = packages
+  default['ceph']['mgr']['packages'] = packages
 else
-  default['ceph']['mds']['packages'] = []
+  default['ceph']['mgr']['packages'] = []
 end
