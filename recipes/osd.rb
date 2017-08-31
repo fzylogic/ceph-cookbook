@@ -141,7 +141,7 @@ else
         supports :restart => true
       end
     elsif service_type == 'systemd'
-      unit = "ceph-mon@#{node['hostname']}.service"
+      unit = "ceph-osd@#{node['hostname']}.service"
       systemd_unit unit do
         action :enable
       end
