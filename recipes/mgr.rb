@@ -49,7 +49,6 @@ file "/var/lib/ceph/mgr/#{cluster}-#{node['hostname']}/#{filename}" do
 end
 
 service 'ceph_mgr' do
-  case service_type
   service_name 'ceph-mgr'
   action [:enable, :start]
   supports :restart => true
