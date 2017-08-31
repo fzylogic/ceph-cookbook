@@ -56,8 +56,10 @@ file "/var/lib/ceph/mgr/#{cluster}-#{node['hostname']}/#{filename}" do
   mode 00644
 end
 
-service 'ceph_mgr' do
-  service_name 'ceph-mgr'
-  action [:enable, :start]
-  supports :restart => true
+if service_type == 'upstart'
+  service 'ceph_mgr' do
+    service_name 'ceph-mgr'
+    action [:enable, :start]
+    supports :restart => true
+  end
 end
