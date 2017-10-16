@@ -23,8 +23,8 @@ include_recipe 'ceph::mds_install'
 cluster = 'ceph'
 
 directory "/var/lib/ceph/mds/#{cluster}-#{node['hostname']}" do
-  owner 'root'
-  group 'root'
+  owner node['ceph']['owner']
+  group node['ceph']['group']
   mode 00755
   recursive true
   action :create
