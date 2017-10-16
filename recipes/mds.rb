@@ -34,6 +34,8 @@ ceph_client 'mds' do
   caps('osd' => 'allow *', 'mon' => 'allow rwx')
   keyname "mds.#{node['hostname']}"
   filename "/var/lib/ceph/mds/#{cluster}-#{node['hostname']}/keyring"
+  owner node['ceph']['owner']
+  group node['ceph']['group']
 end
 
 file "/var/lib/ceph/mds/#{cluster}-#{node['hostname']}/done" do
