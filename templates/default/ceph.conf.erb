@@ -5,7 +5,9 @@
 <% if node['ceph']['is_mon'] -%>
   mon initial members = <%= node['ceph']['config']['mon_initial_members'] %>
 <% end -%>
+<% if !node['ceph']['config']['global']['mon_host'].nil? -%>
   mon host = <%= @mon_addresses.sort.join(', ') %>
+<% end -%>
 <% if (! node['ceph']['config']['global'].nil?) -%>
   <% node['ceph']['config']['global'].sort.each do |k, v| %>
   <%= k %> = <%= v %>
