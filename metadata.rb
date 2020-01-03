@@ -6,7 +6,7 @@ description 'Installs/Configures the Ceph distributed filesystem'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version '0.9.35'
 
-depends	'apache2', '>= 1.1.12'
+depends	'apache2', '>= 1.1.13'
 depends 'apt'
 depends 'yum', '>= 3.0'
 depends 'yum-epel'
