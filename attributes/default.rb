@@ -1,3 +1,5 @@
+default['ceph']['cluster'] = 'ceph'
+
 default['ceph']['install_debug'] = false
 default['ceph']['encrypted_data_bags'] = false
 
